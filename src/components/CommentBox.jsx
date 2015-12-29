@@ -46,7 +46,7 @@ export default React.createClass({
     */
   },
   getInitialState: function() {
-    return {data: []};
+    return {data: this.props.commentList};
   },
   /*
   componentDidMount: function() {
@@ -58,7 +58,7 @@ export default React.createClass({
     return (
       <div className="commentBox">
         <h1>Comments</h1>
-        <CommentList data={this.props.commentList} />
+        <CommentList data={this.state.data} />
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
      </div>
     );
