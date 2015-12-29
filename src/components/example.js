@@ -80,7 +80,6 @@ export const CommentBox = React.createClass({
     //setInterval(this.loadCommentsFromServer, this.props.route.pollInterval);
   },
   render: function() {
-    console.log(this.props.commentList);
     return (
       <div className="commentBox">
         <h1>Comments</h1>
@@ -96,8 +95,8 @@ var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function(comment) {
       return (
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
+        <Comment author={comment.get('author')} key={comment.get('id')}>
+          {comment.get('text')}
         </Comment>
       );
     });
