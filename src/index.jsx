@@ -7,15 +7,17 @@ import reducer from './reducer';
 import App from './components/App';
 import {CommentBoxContainer} from './components/example';
 import {Provider} from 'react-redux';
-import io from 'socket.io-client';
+import socketIOClient from 'socket.io-client';
+import SailsIOClient from 'sails.io.js';
 
 const store = createStore(reducer);
 
-//const socket = io('${location.protocol}//${location.hostname}:8090');
-const socket = io('localhost:8090');
+const io = SailsIOClient(socketIOClient);
+//io.sails.autoConnect = false
+io.sails.url = 'http://localhost:1337';
+io.sails.connect()
 
-socket.on('state', state => store.dispatch({type: 'SET_STATE', state}));
-
+/*
 store.dispatch({
   type: 'SET_STATE',
   state: {
@@ -33,9 +35,19 @@ store.dispatch({
     ] // End commentList
   }   // End state
 });
+*/
+
+var xx = function(comment) {
+  console.log("INSIDE YOLO > xx")
+  console.log(comment)
+  io.socket.get('/comment/create', comment, function(resData, jwres) {
+    console.log("Created new comment")
+    console.log(resData);
+  });
+}
 
 const routes = <Route component={App}>
-  <Route path="/" component={CommentBoxContainer} />
+  <Route path="/" component={CommentBoxContainer} yolo={xx} />
 </Route>;
 
 ReactDOM.render(
@@ -44,3 +56,38 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+
+io.socket.on('connect', function(event) { 
+  console.log(" -- 1 -- ");
+  console.log("CONNECTED");
+  console.log(event); 
+  console.log(" -- /1 -- ");
+// Runs only on server start
+  io.socket.get('/comment', function(resData, jwres) {
+    console.log(" -- 2 -- ");
+    console.log(resData);
+    /*
+    resData.map(comment => {
+      comment.author = comment.commentedBy.name
+    })
+    */
+    //console.log(jwres);
+    store.dispatch({type: 'SET_STATE', state: { commentList: resData}});
+    console.log(" -- /2 -- ");
+  });
+
+});
+//io.sails.connect()
+io.socket.on('comment', function(msg) {
+  console.log(" -- Comment Event -- ");
+  console.log(msg); 
+  store.dispatch({type: 'NEW_COMMENT', state: { newComment: msg.data }});
+
+  console.log(" -- /Comment Event -- ");
+});
+io.socket.on('user', function(msg) {
+  console.log(" -- User Event -- ");
+  console.log(msg); 
+  console.log(" -- /User Event -- ");
+});
+
