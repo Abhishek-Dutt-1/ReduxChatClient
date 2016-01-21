@@ -1,4 +1,6 @@
 # Chat App With Redux + ReactJs - Client
+[![Build Status](https://travis-ci.org/AbhishekDutt/ReduxChatClient.svg?branch=master)](https://travis-ci.org/AbhishekDutt/ReduxChatClient)
+
 
 ### Clone this repo:
 ```
