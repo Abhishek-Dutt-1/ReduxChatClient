@@ -3,6 +3,18 @@
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font: 13px Helvetica, Arial; }
+    form { background-color: lightgreen; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+    form input#name { border: 0; padding: 10px; width: 20%; margin-right: .5%; }
+    form input#text { border: 0; padding: 10px; width: 70%; margin-right: .5%; }
+    form input[type=submit] { width: 9%; background-color: gold; border: none; padding: 10px; }
+    .commentList { list-style-type: none; margin: 0 0 40px 0; padding: 0; }
+    .commentList li { padding: 5px 10px; }
+    .commentList li:nth-child(odd) { background: #eee; }
+    .commentList .commentAuthor {float: left; font-weight: bold; margin: 0 10px;}
+  </style>
 </head>
 <body>
   <div id="app"></div>

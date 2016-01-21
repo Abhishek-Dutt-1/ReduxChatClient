@@ -1,4 +1,4 @@
-import {Map, Record} from 'immutable';
+import {Map} from 'immutable';
 
 function setState(state, newState) {
   return state.merge(newState);
@@ -11,21 +11,11 @@ function newComment(state, newState) {
 
   return state.updateIn( ['commentList'], commentList => commentList.push(newComment) )
 
-  //var newState2 = newState
-  //newState2.newComment.commentedBy = Map(newState.newComment.commentedBy)
-  //return state.updateIn( ['commentList'], commentList => commentList.push(Map(newState.newComment)) )
-
-
-
-
 }
 
 export default function(state = Map(), action) {
   switch (action.type) {
     case 'SET_STATE': {
-      console.log(" -- 3 -- ");
-      console.log(action);
-      console.log(" -- /3 -- ");
       return setState(state, action.state);
     }
     case 'NEW_COMMENT': {
